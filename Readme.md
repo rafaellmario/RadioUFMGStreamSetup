@@ -6,7 +6,7 @@ This tutorial aims to describe the steps to install and creates an audio stream 
 
 <p align="justify">
 
-**Icecast** is a streaming media (audio/video) server which supports Ogg (Vorbis and Theora), Opus, WebM and MP3 streams. It is distributed under the GNU GPL, version 2 license and it can be used to create an Internet radio station, privately running jukebox and many things in between. It is very versatile in that new formats can be added relatively easily and supports open standards for communication and interaction. The instructions described in this tutorial refers to **icecast2** version 2.4.4.
+**Icecast** is a streaming media (audio/video) server which supports Ogg (Vorbis and Theora), Opus, WebM and MP3 streams. It is distributed under the GNU GPL, version 2 license and it can be used to create an Internet radio station and many other things. It is very versatile in that new formats can be added relatively easily and supports open standards for communication and interaction. The instructions described in this tutorial refers to **icecast2** version 2.4.4.
 
 Each **icecast** server can house multiple streams, called mountpoints, that is a a unique name on your server identifying a particular stream like a filename. A listener can only listen to a single mountpoint at a time, thus, a single **icecast** server contain multiple broadcasts with different content, or the same broadcast with different bitrates or qualities, in a separate mountpoints.
 
@@ -14,19 +14,19 @@ Each **icecast** server can house multiple streams, called mountpoints, that is 
 
 ### Install icecast2 on Ubuntu/Debian
 
-On *Ubuntu/Debian* terminal update the system packages, then, install **icecast2** and its dependencies.
+On *Ubuntu/Debian*, terminal update the system packages, then install **icecast2** and its dependencies.
 ```bash
 $sudo apt update -y && sudo apt dist-upgrade -y
 $sudo apt install icecast2
 ```
 During the installation process a terminal GUI with instructions will be opened, follow the instructions bellow.
-1.  If is desired to configure the **icecast2**, select `<Yes>` option, otherwise select `<No>`.
+1.  If is desired to configure the **icecast2** now, select `<Yes>` option, otherwise select `<No>`.
 <p align="center">
     <img src="./mdPictures/icecast2_1.png" alt="First configuration screen"
     width="450" heigh="350">
 </p>
 
-2. Sets the domain name. Using `localhost` means that the service will only stream on the localhost, i.e., refer to the host server domain name itself.
+2. Sets the domain name. Using `localhost`, means that the service will only stream on the localhost, i.e., refer to the host server domain name itself.
 <p align="center">
     <img src="./mdPictures/icecast2_2.png" alt="Second configuration screen"
     width="450" heigh="350">
@@ -64,7 +64,7 @@ $sudo systemctl status icecast2
         CGroup: /system.slice/icecast2.service
             └─33759 /usr/bin/icecast2 -b -c /etc/icecast2/icecast.xml
 ```
-If the **icecast2** service has not been added at startup, the `systemctl enable` instruction should be applied to the `icecast` escript found in the `/etc/defaults` folder.
+If the **icecast2** service has not been added at startup, the `systemctl enable` instruction should be applied to the `icecast2` escript found in the `/etc/defaults` folder.
 ```bash
 $cd /etc/default/
 $sudo sudo systemctl --now enable icecast2
@@ -141,7 +141,7 @@ For more information about **icecast** stream server see its documentation [here
 </p>
 
 ## **Liquidsoap**
-**Liquidsoap** is a general audio stream generator, but is mainly intended for Internet radios.
+**Liquidsoap** is a general audio stream generator but, it is mainly intended for Internet radio.
 
 <p align="justify">
 
@@ -161,11 +161,11 @@ Install **liquidsoap** and its plugins for alsa
 ```bash
 $sudo apt install liquidsoap  liquidsoap-plugin-alsa liquidsoap-plugin-flac liquidsoap-plugin-ogg -y
 ```
-> Since the `opus` is a proprietary audio format, in ubuntu 18.04 and later versions the opus plugin must be removed.
+> **Pay Attention**: Since the `opus` is a proprietary audio format, in ubuntu 18.04 and later versions the opus plugin must be removed.
 ```bash
 $sudo apt remove liquidsoap-plugin-opus -y
 ```
-Adds the `liquidsoap` user to the `audio` goupt and the system adminitrator user the the `liquidsoap`  group.
+Add the `liquidsoap` user to `audio` goup and the system adminitrator user to `liquidsoap` group.
 ```bash
 $sudo usermod -a -G audio liquidsoap 
 $sudo usermod -a -G liquidsoap radiola
@@ -176,7 +176,7 @@ $sudo chmod 666 /etc/logrotate.d/liquidsoap
 $sudo chmod 777 /var/log/liquidsoap
 $sudo chmod a+x /run/liquidsoap
 ```
-Creates the log file in the `/var/log/` folder and change the owners of the log file,`/etc/logrotate.d/liquidsoap`, `/run/liquidsoap` and `var/log/liquidsoap` folders. In the example below it is created the log file `radio.log`:
+Creates the log file in the `/var/log/` folder and change owners of the log file,`/etc/logrotate.d/liquidsoap`, `/run/liquidsoap` and `var/log/liquidsoap` folders. In the example below it is created the log file named `radio.log`:
 
 ```bash
 $sudo touch /var/log/liquidsoap/radio.log
@@ -185,7 +185,7 @@ $sudo chown root:root /var/log/liquidsoap
 $sudo chown liquidsoap:liquidsoap /var/run/liquidsoap
 $sudo chown liquidsoap:liquidsoap /var/log/liquidsoap/radio.log
 ```
-The **liquidsoap** service is automatically added to th system start-up, but for this, the **liquidsoap** source file, or an alias for it, must be located within the `/etc/liquidsoap/` directory, in the example below it is created the source fine `radio.liq`:
+The **liquidsoap** service is automatically added to system start-up, but for this, the **liquidsoap** source file, or an alias for it, must be located within the `/etc/liquidsoap/` directory and give it execute permission for all users levels. In the example bellow it is created the source file `radio.liq`:
 
 ```bash
 $sudo touch /etc/liquidsoap/radio.liq
@@ -209,7 +209,7 @@ card 1: CODEC [USB Audio CODEC], device 0: USB Audio [USB Audio]
   Subdevices: 0/1
   Subdevice #0: subdevice #0
 ```
-> Obs: For output devices should be used the `aplay` instruction.
+> **Obs**: For output devices should be used the `aplay` instruction.
 
 Is a good programming practice assingn the audio input device to a variable, in order to reduce the code verbosity.
 
